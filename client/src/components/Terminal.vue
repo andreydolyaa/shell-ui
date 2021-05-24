@@ -39,7 +39,7 @@ export default {
 .terminal {
 	background-color: #000;
 	width: 900px;
-	height: 400px;
+	height: 450px;
 	padding: 10px;
 	overflow-y: scroll;
 }

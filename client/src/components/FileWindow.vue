@@ -2,6 +2,7 @@
 	<div class="file-window">
 		<div v-if="path" class="path">/:{{path.join("/")}}</div>
         <div v-else class="path">drive:/</div>
+        <div class="spacer"></div>
 
 		<div class="file-sys">
 			<div class="files" v-for="file in files" :key="file.id">
@@ -32,6 +33,8 @@ export default {
 	background-color: #fff;
 	width: 900px;
 	height: 300px;
+    overflow-y: scroll;
+    position: relative;
 }
 .file-sys {
 	display: flex;
@@ -41,7 +44,13 @@ export default {
 .path {
 	background-color: rgb(230, 230, 230);
 	color: black;
-	padding: 5px;
+	padding: 8px;
+    position: fixed;
+    width:900px;
+    font-weight: bold;
+}
+.spacer{
+    height:25px;
 }
 .files {
 	width: 100px;

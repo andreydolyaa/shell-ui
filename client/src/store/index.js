@@ -28,9 +28,20 @@ export default new Vuex.Store({
                 this.commit('clearTerminal');
             }
             else if (cmd_chain[0] === 'mkdir' && cmd_chain.length === 2) {
-                var newFolder = cmd_s.createNewFolder(cmd_chain[1]);
-                state.files.push(newFolder);
-                state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                if (state.files.some(file => file.path.includes(cmd_chain[1]))) {
+                    var numOfSameFiles = 1;
+                    for (var i = 0; i < state.files.length; i++) {
+                        if (state.files[i].folder.includes(numOfSameFiles.toString()) && state.files[i].folder.includes(cmd_chain[1])) numOfSameFiles++;
+                    }
+                    var newFolder = cmd_s.createNewFolder(cmd_chain[1] + `(${numOfSameFiles})`);
+                    state.files.push(newFolder);
+                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                }
+                else {
+                    var newFolder = cmd_s.createNewFolder(cmd_chain[1]);
+                    state.files.push(newFolder);
+                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                }
             }
             else if (cmd_chain[0] === 'rmdir' && cmd_chain.length === 2) {
                 const idx = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
@@ -40,6 +51,7 @@ export default new Vuex.Store({
             else if (cmd_chain[0] === 'mv' && cmd_chain.length === 3) {
                 const idx = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
                 state.files[idx].folder = cmd_chain[2];
+                state.files[idx].path = cmd_chain[2].toLowerCase();
                 state.messages.push(cmd_s.newMsg(`directory \"${cmd_chain[1]}\" changed to \"${cmd_chain[2]}\"`));
             }
             else if (cmd === 'ls') {

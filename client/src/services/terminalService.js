@@ -164,7 +164,8 @@ function filesStructure() {
                     ]
                 },
             ],
-        }
+        },
+        
     ]
 }
 

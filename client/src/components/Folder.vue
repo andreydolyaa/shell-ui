@@ -1,6 +1,11 @@
 <template>
 	<div class="folder-r">
-		<p>{{label}}</p>
+		<ul class="icon-label">
+			<li>
+				<img src="../assets/folder.png" alt />
+			</li>
+			<li>{{label}}</li>
+		</ul>
 		<Folder v-for="node in nodes" :nodes="node.subfolders" :label="node.folder" :key="node.id" class="inner-folders" />
 	</div>
 </template>
@@ -18,13 +23,24 @@ export default {
 
 <style>
 .folder-r {
-    margin-left:15px;
+	margin-left: 15px;
+    border-left:1px dotted gray;
 }
-.folder-r:first-child{
-    margin-top:1rem;
+.folder-r:first-child {
+	margin-top: 1rem;
 }
 .inner-folders {
-	margin-left: 2rem;
-    /* border: 1px solid black; */
+	margin-left: 1.2rem;
+    border-left:1px dotted gray;
+}
+.folder-r img {
+	width: 13px;
+	margin-right: 5px;
+    margin-left:10px;
+}
+.icon-label {
+	display: flex;
+	align-items: center;
+    list-style: none;
 }
 </style>
