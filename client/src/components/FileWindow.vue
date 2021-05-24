@@ -50,7 +50,7 @@ export default {
     font-weight: bold;
 }
 .spacer{
-    height:25px;
+    height:30px;
 }
 .files {
 	width: 100px;
@@ -63,10 +63,18 @@ export default {
     margin:5px 0;
 }
 .folder p{
+    margin-top:3px;
     color:black;
+    font-size: 12px;
+    font-weight: bold;
+    width:80px;
+    /* border:1px solid black; */
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 13px;
 }
 
 .folder img {
-	width: 50px;
+	width: 35px;
 }
 </style>

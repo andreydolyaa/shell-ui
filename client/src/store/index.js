@@ -57,12 +57,12 @@ export default new Vuex.Store({
             else if (cmd === 'ls') {
                 state.files.forEach((file, idx) => state.messages.push({ date: idx + 1 + ')', msg: file.folder }));
             }
-            else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1]))) {
-                const directory = state.files.find(file => file.path === cmd_chain[1]);
+            else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1].toLowerCase()))) {
+                const directory = state.files.find(file => file.path === cmd_chain[1].toLowerCase());
                 state.prevFiles.push(state.files);
                 state.files = directory.subfolders;
-                state.path += '/' + directory.path;
-                state.pathLine.push(directory.path);
+                state.path += '/' + directory.folder;
+                state.pathLine.push(directory.folder);
                 state.user = 'root:' + '/' + state.pathLine.join("/");
             }
             else if (cmd === 'cd ..') {
