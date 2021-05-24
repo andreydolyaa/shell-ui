@@ -12,8 +12,8 @@ export default new Vuex.Store({
         error: null,
         path: '',
         files: [],
+        prevFiles: [],
         structure: [],
-        prevFolder:''
     },
     mutations: {
         checkCmd(state, { cmd }) {
@@ -46,15 +46,18 @@ export default new Vuex.Store({
             }
             else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1]))) {
                 const directory = state.files.find(file => file.path === cmd_chain[1]);
-                state.prevFolder = directory.id;
+                state.prevFiles.push(state.files);
                 state.files = directory.subfolders;
                 state.path += '/' + directory.path;
                 state.user += '/' + directory.path;
-                console.log(state.prevFolder);
-                console.log(state.files);
             }
-            else if(cmd === 'cd ..'){
-                const prevDirectoryById = state.structure
+            else if (cmd === 'cd ..') {
+                if (state.prevFiles.length) {
+                    state.files = state.prevFiles[state.prevFiles.length - 1];
+                    state.prevFiles.pop();
+                }
+                else state.files = state.structure;
+
             }
             else {
                 state.messages.push(cmd_s.newMsg('unknown command, type --help for instructions'));
@@ -84,7 +87,7 @@ export default new Vuex.Store({
         getCmds(state) {
             return state.cmds;
         },
-        getStructure(state){
+        getStructure(state) {
             return state.structure;
         }
     },

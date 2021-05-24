@@ -4,7 +4,8 @@ export const cmd_s = {
     newMsg,
     getInstructions,
     filesStructure,
-    createNewFolder
+    createNewFolder,
+    // findPrevFolder
 }
 
 function newMsg(msg) {
@@ -14,6 +15,17 @@ function newMsg(msg) {
         msg
     }
 }
+
+// function findPrevFolder(data, id) {
+//     for (var i = 0; i < data.length; i++) {
+//         if (data[i].id === id) {
+//             return data[i];
+//         }
+//         var found = findPrevFolder(data[i].subfolders, id);
+//         if (found) return found;
+//     }
+// }
+
 
 function filesStructure() {
     return [
