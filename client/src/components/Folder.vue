@@ -1,7 +1,7 @@
 <template>
 	<div class="folder-r">
-		<div>{{label}}</div>
-		<Folder v-for="node in nodes" :nodes="node.subfolders" :label="node.folder" :key="node.id" />
+		<p>{{label}}</p>
+		<Folder v-for="node in nodes" :nodes="node.subfolders" :label="node.folder" :key="node.id" class="inner-folders" />
 	</div>
 </template>
 
@@ -17,7 +17,14 @@ export default {
 </script>
 
 <style>
-.folder-r{
-    margin-left:2rem;
+.folder-r {
+    margin-left:15px;
+}
+.folder-r:first-child{
+    margin-top:1rem;
+}
+.inner-folders {
+	margin-left: 2rem;
+    /* border: 1px solid black; */
 }
 </style>

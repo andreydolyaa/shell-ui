@@ -12,6 +12,7 @@ export default new Vuex.Store({
         error: null,
         path: '',
         files: [],
+        pathLine: [],
         prevFiles: [],
         structure: [],
     },
@@ -49,14 +50,20 @@ export default new Vuex.Store({
                 state.prevFiles.push(state.files);
                 state.files = directory.subfolders;
                 state.path += '/' + directory.path;
-                state.user += '/' + directory.path;
+                state.pathLine.push(directory.path);
+                state.user = 'root:' + '/' + state.pathLine.join("/");
             }
             else if (cmd === 'cd ..') {
                 if (state.prevFiles.length) {
                     state.files = state.prevFiles[state.prevFiles.length - 1];
+                    state.pathLine.pop();
                     state.prevFiles.pop();
+                    state.user = 'root:' + '/' + state.pathLine.join("/");
                 }
-                else state.files = state.structure;
+                if (state.prevFiles.length === 0) {
+                    state.files = state.structure;
+                    state.user = 'root:'
+                }
 
             }
             else {
@@ -89,6 +96,9 @@ export default new Vuex.Store({
         },
         getStructure(state) {
             return state.structure;
+        },
+        getPathLine(state) {
+            return state.pathLine;
         }
     },
     actions: {

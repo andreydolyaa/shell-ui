@@ -16,15 +16,15 @@ function newMsg(msg) {
     }
 }
 
-// function findPrevFolder(data, id) {
-//     for (var i = 0; i < data.length; i++) {
-//         if (data[i].id === id) {
-//             return data[i];
-//         }
-//         var found = findPrevFolder(data[i].subfolders, id);
-//         if (found) return found;
-//     }
-// }
+function findPrevFolder(data, id) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+            return data[i];
+        }
+        var found = findPrevFolder(data[i].subfolders, id);
+        if (found) return found;
+    }
+}
 
 
 function filesStructure() {
@@ -46,20 +46,38 @@ function filesStructure() {
         },
         {
             id: "fg35h3h34",
-            path: '1',
-            folder: '1',
+            path: 'media',
+            folder: 'Media',
             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
             subfolders: [
                 {
                     id: "fb35bh3",
-                    path: '2',
-                    folder: '2',
+                    path: 'music',
+                    folder: 'Music',
                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                     subfolders: [
                         {
                             id: "b4rth43",
-                            path: '3',
-                            folder: '3',
+                            path: 'techno',
+                            folder: 'Techno',
+                            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                            subfolders: [
+
+                            ]
+                        },
+                        {
+                            id: "dfbg34h3",
+                            path: 'psytrance',
+                            folder: 'Psytrance',
+                            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                            subfolders: [
+
+                            ]
+                        },
+                        {
+                            id: "34g34gh3h3",
+                            path: 'trap',
+                            folder: 'Trap',
                             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                             subfolders: [
 
@@ -76,28 +94,75 @@ function filesStructure() {
             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
             subfolders: [
                 {
-                    id: "pdfgb4",
-                    path: 'pictures',
-                    folder: 'Pictures',
+                    id: "fedh45h4",
+                    path: 'backgrounds',
+                    folder: 'Backgrounds',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [
+
+                    ]
+                },
+                {
+                    id: "fe2g23dh45h4",
+                    path: 'paperwork',
+                    folder: 'Paperwork',
                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                     subfolders: [
                         {
-                            id: "pdereggefgb4",
-                            path: 'backgrounds',
-                            folder: 'Backgrounds',
+                            id: "fefbn45g4",
+                            path: 'bank',
+                            folder: 'Bank',
+                            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                            subfolders: [
+        
+                            ]
+                        },
+                        {
+                            id: "fefg345gb534bn45g4",
+                            path: 'insurance',
+                            folder: 'Insurance',
                             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                             subfolders: [
                                 {
-                                    id: "pderretgfgb4",
-                                    path: 'photoshop',
-                                    folder: 'Photoshop',
+                                    id: "b4e5gh3",
+                                    path: '2019',
+                                    folder: '2019',
                                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
-                                    subfolders: [],
-                                }
-                            ],
-                        }
-                    ],
-                }
+                                    subfolders: [
+                
+                                    ]
+                                },
+                                {
+                                    id: "trbr4g453g3",
+                                    path: '2020',
+                                    folder: '2020',
+                                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                                    subfolders: [
+                
+                                    ]
+                                },
+                                {
+                                    id: "b44grt45ggh3",
+                                    path: '2021',
+                                    folder: '2021',
+                                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                                    subfolders: [
+                
+                                    ]
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    id: "vdf434bg43",
+                    path: 'shared',
+                    folder: 'Shared',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [
+
+                    ]
+                },
             ],
         }
     ]

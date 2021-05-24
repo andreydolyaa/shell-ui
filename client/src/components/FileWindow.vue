@@ -1,6 +1,6 @@
 <template>
 	<div class="file-window">
-		<div v-if="path" class="path">{{path}}</div>
+		<div v-if="path" class="path">/:{{path.join("/")}}</div>
         <div v-else class="path">drive:/</div>
 
 		<div class="file-sys">
@@ -21,7 +21,7 @@ export default {
 			return this.$store.getters.getFiles;
 		},
         path(){
-            return this.$store.getters.getPath;
+            return this.$store.getters.getPathLine;
         }
 	},
 };
