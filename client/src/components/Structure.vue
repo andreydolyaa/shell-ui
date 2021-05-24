@@ -25,8 +25,6 @@ export default {
 
 <style>
 .structure{
-    /* position: absolute; */
-    /* left:20px; */
     height:780px;
     width:300px;
     background-color: #222;

@@ -76,7 +76,10 @@ export default new Vuex.Store({
                     state.files = state.structure;
                     state.user = 'root:'
                 }
-
+            }
+            else if (cmd_chain[0] === 'browser' && cmd_chain.length === 2) {
+                state.messages.push(cmd_s.newMsg(`${cmd_chain[1]} opened in a new tab`));
+                cmd_s.openUrl(cmd_chain[1]);
             }
             else {
                 state.messages.push(cmd_s.newMsg('unknown command, type --help for instructions'));

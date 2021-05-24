@@ -26,6 +26,7 @@ export default {
 	margin-left: 15px;
     border-left:1px dotted gray;
 }
+
 .folder-r:first-child {
 	margin-top: 1rem;
 }
@@ -34,7 +35,7 @@ export default {
     border-left:1px dotted gray;
 }
 .folder-r img {
-	width: 13px;
+	width: 12px;
 	margin-right: 5px;
     margin-left:10px;
 }
@@ -42,5 +43,9 @@ export default {
 	display: flex;
 	align-items: center;
     list-style: none;
+}
+.icon-label li{
+    font-size: 12px;
+    color:white;
 }
 </style>

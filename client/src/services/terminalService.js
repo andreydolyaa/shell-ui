@@ -6,6 +6,7 @@ export const cmd_s = {
     filesStructure,
     createNewFolder,
     // findPrevFolder
+    openUrl
 }
 
 function newMsg(msg) {
@@ -24,6 +25,10 @@ function findPrevFolder(data, id) {
         var found = findPrevFolder(data[i].subfolders, id);
         if (found) return found;
     }
+}
+
+function openUrl(url){
+    window.open(`https://${url}`, '_blank');
 }
 
 
@@ -184,11 +189,11 @@ function createNewFolder(name) {
 function getInstructions() {
     return [
         {
-            date: ' mkdir + name (ex: mkdir Games)',
+            date: 'mkdir (ex: mkdir Games)',
             msg: 'creates new directory with the name \"Games\"'
         },
         {
-            date: 'rmdir + name (ex: rmdir Games)',
+            date: 'rmdir (ex: rmdir Games)',
             msg: 'removes selected directory'
         },
         {
@@ -206,6 +211,10 @@ function getInstructions() {
         {
             date: 'cd .. (ex: cd .. (with space in the middle))',
             msg: 'return one level up from a directory'
+        },
+        {
+            date: 'browser (ex: browser www.google.com)',
+            msg: 'opens a new tab with the provided url'
         }
     ]
 }
