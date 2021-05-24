@@ -10,26 +10,9 @@ export const cmd_s = {
 function newMsg(msg) {
     const date = new Date();
     return {
-        date: `[${date.toLocaleTimeString()}]~$`,
+        date: `[${date.toLocaleTimeString()}]`,
         msg
     }
-}
-
-function getInstructions() {
-    return [
-        {
-            date: 'mkdir + name (ex: mkdir Games)',
-            msg: 'creates new directory with the name \"Games\"'
-        },
-        {
-            date: 'rmdir + name (ex: rmdir Games)',
-            msg: 'removes selected directory'
-        },
-        {
-            date:'ls (ex: ls)',
-            msg:'lists all the directories in the current path'
-        }
-    ]
 }
 
 function filesStructure() {
@@ -39,17 +22,75 @@ function filesStructure() {
             path: 'home',
             folder: 'Home',
             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
-            subfolders: [],
+            subfolders: [
+                {
+                    id: "pdfg456b4",
+                    path: 'files',
+                    folder: 'Files',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [],
+                }
+            ],
+        },
+        {
+            id: "fg35h3h34",
+            path: '1',
+            folder: '1',
+            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+            subfolders: [
+                {
+                    id: "fb35bh3",
+                    path: '2',
+                    folder: '2',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [
+                        {
+                            id: "b4rth43",
+                            path: '3',
+                            folder: '3',
+                            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                            subfolders: [
+
+                            ]
+                        },
+                    ]
+                },
+            ]
         },
         {
             id: "p765",
             path: 'documents',
             folder: 'Documents',
             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
-            subfolders: [],
+            subfolders: [
+                {
+                    id: "pdfgb4",
+                    path: 'pictures',
+                    folder: 'Pictures',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [
+                        {
+                            id: "pdereggefgb4",
+                            path: 'backgrounds',
+                            folder: 'Backgrounds',
+                            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                            subfolders: [
+                                {
+                                    id: "pderretgfgb4",
+                                    path: 'photoshop',
+                                    folder: 'Photoshop',
+                                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                                    subfolders: [],
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ],
         }
     ]
 }
+
 
 function createNewFolder(name) {
     return {
@@ -59,6 +100,36 @@ function createNewFolder(name) {
         icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
         subfolders: [],
     }
+}
+
+
+function getInstructions() {
+    return [
+        {
+            date: ' mkdir + name (ex: mkdir Games)',
+            msg: 'creates new directory with the name \"Games\"'
+        },
+        {
+            date: 'rmdir + name (ex: rmdir Games)',
+            msg: 'removes selected directory'
+        },
+        {
+            date: 'ls (ex: ls)',
+            msg: 'lists all the directories in the current path'
+        },
+        {
+            date: 'mv (ex: mv Documents NewDocuments)',
+            msg: 'changes the name of a directory'
+        },
+        {
+            date: 'cd (ex: cd home)',
+            msg: 'enters to the selected directory'
+        },
+        {
+            date: 'cd .. (ex: cd .. (with space in the middle))',
+            msg: 'return one level up from a directory'
+        }
+    ]
 }
 
 

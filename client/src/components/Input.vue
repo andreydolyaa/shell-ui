@@ -1,7 +1,7 @@
 <template>
 	<div class="input">
 		<p class="user">{{user}}</p>
-		<input ref="input" type="text" @blur="focusInput" v-model="cmd" @keyup.enter="submitCmd" />
+		<input ref="input" type="text" @blur="focusInput" v-model="cmd" @keyup.enter="submitCmd();onEnter()"/>
 	</div>
 </template>
 
@@ -16,6 +16,9 @@ export default {
 		user() {
 			return this.$store.getters.getUser;
 		},
+        path(){
+            return this.$store.getters.getPath;
+        }
 	},
 	methods: {
 		focusInput() {
@@ -25,6 +28,9 @@ export default {
 			this.$store.commit({ type: "checkCmd", cmd: this.cmd });
 			this.cmd = "";
 		},
+        onEnter(){
+            this.$emit('cmdEnter');
+        }
 	},
 	mounted() {
 		this.focusInput();
@@ -49,3 +55,6 @@ export default {
 	color: red;
 }
 </style>
+
+
+<p :style="[path === '~$' ? {'color':'red'} : {'color':'#2262DA'}]">{{path}}</p>

@@ -1,11 +1,11 @@
 <template>
-	<div class="terminal">
+	<div class="terminal" ref="terminal">
 		<div class="content" v-for="(msg,idx) in messages" :key="idx">
 			<div>
 				<Message :msg="msg" />
 			</div>
 		</div>
-		<Input />
+		<Input @cmdEnter="scrollDown" />
 	</div>
 </template>
 
@@ -18,10 +18,20 @@ export default {
 		messages() {
 			return this.$store.getters.getMessages;
 		},
-        cmds(){
-            return this.$store.getters.getCmds;
-        }
+		cmds() {
+			return this.$store.getters.getCmds;
+		},
 	},
+	methods: {
+		scrollDown() {
+            var x = this.$refs.terminal;
+            x.scrollTop = x.scrollHeight
+		},
+	},
+    updated(){
+        // document.querySelector('.terminal').scrollTop = document.querySelector('.terminal').scrollHeight;
+        this.scrollDown();
+    }
 };
 </script>
 
@@ -31,6 +41,6 @@ export default {
 	width: 900px;
 	height: 400px;
 	padding: 10px;
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 </style>

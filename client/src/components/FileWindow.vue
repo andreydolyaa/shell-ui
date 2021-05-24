@@ -1,6 +1,7 @@
 <template>
 	<div class="file-window">
-		<div class="path">{{path}}</div>
+		<div v-if="path" class="path">{{path}}</div>
+        <div v-else class="path">drive:/</div>
 
 		<div class="file-sys">
 			<div class="files" v-for="file in files" :key="file.id">

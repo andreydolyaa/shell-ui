@@ -1,6 +1,6 @@
 <template>
 	<div class="message-container">
-		<p :style="[msg.date === 'root:~$' ? {'color':'red'} : null]">{{msg.date}}</p>
+		<p :style="[msg.date === 'root:' || calcChars === '/' ? {'color':'red'} : null]">{{msg.date}}</p>
 		<p class="message">{{msg.msg}}</p>
 	</div>
 </template>
@@ -10,15 +10,24 @@ export default {
 	props: {
 		msg: Object,
 	},
+	computed: {
+		path() {
+			return this.$store.getters.getPath;
+		},
+		calcChars() {
+			return this.msg.date.substring(5, 6);
+		},
+	},
 };
 </script>
 
 <style>
 .message-container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
-.message{
-    margin-left: 10px;
+.message {
+	margin-left: 10px;
 }
 </style>
+
