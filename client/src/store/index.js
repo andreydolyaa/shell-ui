@@ -15,6 +15,7 @@ export default new Vuex.Store({
         pathLine: [],
         prevFiles: [],
         structure: [],
+        currentFolder: {}
     },
     mutations: {
         checkCmd(state, { cmd }) {
@@ -59,7 +60,9 @@ export default new Vuex.Store({
             }
             else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1].toLowerCase()))) {
                 const directory = state.files.find(file => file.path === cmd_chain[1].toLowerCase());
+                state.currentFolder = directory;
                 state.prevFiles.push(state.files);
+                console.log('get in : ', state.prevFiles);
                 state.files = directory.subfolders;
                 state.path += '/' + directory.folder;
                 state.pathLine.push(directory.folder);
@@ -70,10 +73,15 @@ export default new Vuex.Store({
                     state.files = state.prevFiles[state.prevFiles.length - 1];
                     state.pathLine.pop();
                     state.prevFiles.pop();
+                    state.currentFolder = state.prevFiles[state.prevFiles.length - 1]
+                    state.currentFolder = state.currentFolder[0]
+                    console.log('go back: ', state.prevFiles);
                     state.user = 'root:' + '/' + state.pathLine.join("/");
+
                 }
                 if (state.prevFiles.length === 0) {
                     state.files = state.structure;
+                    state.currentFolder = {};
                     state.user = 'root:'
                 }
             }
@@ -114,6 +122,9 @@ export default new Vuex.Store({
         },
         getPathLine(state) {
             return state.pathLine;
+        },
+        getCurrentFolder(state) {
+            return state.currentFolder;
         }
     },
     actions: {

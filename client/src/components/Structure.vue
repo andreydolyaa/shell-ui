@@ -2,7 +2,7 @@
 	<div class="structure">
         <h3>Directories Structure</h3>
 		<div v-for="folder in structure" :key="folder.id">
-			<Folder :label="folder.folder" :nodes="folder.subfolders" />
+			<Folder :label="folder.folder" :nodes="folder.subfolders" :folder="folder"/>
 		</div>
 	</div>
 </template>
