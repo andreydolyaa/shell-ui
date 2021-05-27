@@ -1,12 +1,16 @@
 <template>
 	<div class="folder-r">
 		<ul class="icon-label">
-			<li>
-				<img src="../assets/folder.png" alt />
+			<li v-if="folder.folder.slice(-4) === '.txt'" class="txt-img-c">
+				<img class="txt-img" :src="icon" alt />
 			</li>
-			<li :style="[currentFolder.folder === label ? {'color':'red'} : null]">{{label}}</li>
+			<li v-else>
+				<img :src="folder.icon" />
+			</li>
+			<li :style="[currentFolder.folder === label ? {'color':'#2193FF'} : null]">{{label}}</li>
+			<li class="curr-symbol" v-if="currentFolder.folder === label"></li>
 		</ul>
-		<Folder v-for="node in nodes" :nodes="node.subfolders" :label="node.folder" :key="node.id" class="inner-folders" />
+		<Folder v-for="node in nodes" :nodes="node.subfolders" :label="node.folder" :folder="node" :icon="node.icon" :key="node.id" class="inner-folders" />
 	</div>
 </template>
 
@@ -14,12 +18,12 @@
 import Folder from "./Folder";
 export default {
 	name: "Folder",
-	props: ["label", "nodes", "folder"],
-    computed:{
-        currentFolder(){
-            return this.$store.getters.getCurrentFolder;
-        }
-    },
+	props: ["label", "nodes", "folder", "icon"],
+	computed: {
+		currentFolder() {
+			return this.$store.getters.getCurrentFolder;
+		},
+	},
 	components: {
 		Folder,
 	},
@@ -52,5 +56,24 @@ export default {
 .icon-label li {
 	font-size: 12px;
 	color: white;
+}
+.curr-symbol {
+	margin-left: auto;
+	margin-right: 1rem;
+	height: 7px;
+	width: 7px;
+	border-radius: 50%;
+	background: #2193ff;
+}
+.txt-img-c{
+
+}
+.txt-img {
+    display: flex;
+    align-items: center;
+	width:18px !important;
+    height:18px;
+    margin-left: 7px !important;
+    
 }
 </style>

@@ -6,7 +6,7 @@
     font-size: 14px;
     color: var(--text-color);
     line-height: 20px;
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
     scroll-behavior: smooth;
 }
 :root {
@@ -20,29 +20,36 @@
     align-items: center;
     justify-content: center;
 }
-.main > *{
+.home {
+    height: 100vh;
+    background-color: #333;
+    display: flex;
+	justify-content: center;
+    align-items: center;
+}
+.main > * {
     margin: 1rem;
 }
 .tf > * {
-    margin:2rem 0;
+    margin: 2rem 0;
 }
 
 /* width */
 ::-webkit-scrollbar {
     width: 6px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     background: #1c1c1c;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #888;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+}

@@ -1,7 +1,7 @@
 <template>
 	<div class="input">
 		<p class="user">{{user}}</p>
-		<input ref="input" type="text" @blur="focusInput" v-model="cmd" @keyup.enter="submitCmd();onEnter()"/>
+		<input ref="input" type="text" @blur="focusInput" v-model="cmd" @keyup.enter="submitCmd();onEnter()" />
 	</div>
 </template>
 
@@ -16,21 +16,33 @@ export default {
 		user() {
 			return this.$store.getters.getUser;
 		},
-        path(){
-            return this.$store.getters.getPath;
-        }
+		path() {
+			return this.$store.getters.getPath;
+		},
 	},
 	methods: {
 		focusInput() {
 			this.$refs.input.focus();
 		},
 		submitCmd() {
-			this.$store.commit({ type: "checkCmd", cmd: this.cmd });
-			this.cmd = "";
+			if (this.cmd === "exit") {
+				var interval = setInterval(() => {
+					this.exit();
+					clearInterval(interval);
+				}, 4000);
+				this.$store.commit({ type: "checkCmd", cmd: this.cmd });
+				this.cmd = "";
+			} else {
+				this.$store.commit({ type: "checkCmd", cmd: this.cmd });
+				this.cmd = "";
+			}
 		},
-        onEnter(){
-            this.$emit('cmdEnter');
-        }
+		onEnter() {
+			this.$emit("cmdEnter");
+		},
+		exit() {
+			this.$router.push("/");
+		},
 	},
 	mounted() {
 		this.focusInput();

@@ -14,6 +14,7 @@ export default new Vuex.Store({
         files: [],
         pathLine: [],
         prevFiles: [],
+        prevPath: [],
         structure: [],
         currentFolder: {}
     },
@@ -21,6 +22,7 @@ export default new Vuex.Store({
         checkCmd(state, { cmd }) {
             state.messages.push({ date: state.user, msg: cmd });
             var cmd_chain = cmd.split(" ");
+            var path_chain = cmd.split(/[ ,/]/);
             if (cmd === '--help') {
                 var help = cmd_s.getInstructions();
                 help.map(h => state.messages.push(h));
@@ -58,11 +60,13 @@ export default new Vuex.Store({
             else if (cmd === 'ls') {
                 state.files.forEach((file, idx) => state.messages.push({ date: idx + 1 + ')', msg: file.folder }));
             }
-            else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1].toLowerCase()))) {
+            else if (cmd_chain[0] === 'cd' && cmd_chain.length === 2 && state.files.some(f => f.path.includes(cmd_chain[1].toLowerCase())) && cmd_chain[1].slice(-4) !== '.txt') {
                 const directory = state.files.find(file => file.path === cmd_chain[1].toLowerCase());
-                state.currentFolder = directory;
+                const end = cmd_chain[cmd_chain.length - 1];
+                const dest = cmd_s.findPrevFolder(state.structure, end);
+                state.currentFolder = dest;
+                state.prevPath.push(dest);
                 state.prevFiles.push(state.files);
-                console.log('get in : ', state.prevFiles);
                 state.files = directory.subfolders;
                 state.path += '/' + directory.folder;
                 state.pathLine.push(directory.folder);
@@ -70,14 +74,12 @@ export default new Vuex.Store({
             }
             else if (cmd === 'cd ..') {
                 if (state.prevFiles.length) {
+                    state.prevPath.pop();
+                    state.currentFolder = state.prevPath[state.prevPath.length - 1];
                     state.files = state.prevFiles[state.prevFiles.length - 1];
                     state.pathLine.pop();
                     state.prevFiles.pop();
-                    state.currentFolder = state.prevFiles[state.prevFiles.length - 1]
-                    state.currentFolder = state.currentFolder[0]
-                    console.log('go back: ', state.prevFiles);
                     state.user = 'root:' + '/' + state.pathLine.join("/");
-
                 }
                 if (state.prevFiles.length === 0) {
                     state.files = state.structure;
@@ -85,9 +87,46 @@ export default new Vuex.Store({
                     state.user = 'root:'
                 }
             }
+            else if (path_chain[0] === 'cd' && path_chain.length >= 3) {
+                const end = path_chain[path_chain.length - 1];
+                const dest = cmd_s.findPrevFolder(state.structure, end);
+                state.files = dest.subfolders;
+                state.currentFolder = dest;
+                path_chain.shift();
+                state.pathLine = path_chain;
+                state.user = 'root:' + '/' + state.pathLine.join("/");
+            }
             else if (cmd_chain[0] === 'browser' && cmd_chain.length === 2) {
                 state.messages.push(cmd_s.newMsg(`${cmd_chain[1]} opened in a new tab`));
                 cmd_s.openUrl(cmd_chain[1]);
+            }
+            else if (cmd_chain[0] === 'touch' && cmd_chain.length === 2) {
+                if (state.files.some(file => file.path.includes(cmd_chain[1]))) {
+                    var numOfSameFiles = 1;
+                    for (var i = 0; i < state.files.length; i++) {
+                        if (state.files[i].folder.includes(numOfSameFiles.toString()) && state.files[i].folder.includes(cmd_chain[1])) numOfSameFiles++;
+                    }
+                    var textFile = cmd_s.createTextFile(cmd_chain[1] + `(${numOfSameFiles}).txt`);
+                    state.files.push(textFile);
+                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                }
+                else {
+                    var textFile = cmd_s.createTextFile(cmd_chain[1] + '.txt');
+                    state.files.push(textFile);
+                    state.messages.push(cmd_s.newMsg(`new text file \"${cmd_chain[1]}\" created`));
+                }
+            }
+            else if (cmd === 'exit') {
+                state.messages.push(cmd_s.newMsg('shutting down in 3 seconds...'));
+                state.files = [];
+                state.cmds = [];
+                state.user = 'root:';
+                state.error = null;
+                state.path = '';
+                state.pathLine = [];
+                state.prevFiles = [];
+                state.prevPath = [];
+                state.currentFolder = {};
             }
             else {
                 state.messages.push(cmd_s.newMsg('unknown command, type --help for instructions'));

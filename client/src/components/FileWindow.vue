@@ -1,6 +1,6 @@
 <template>
 	<div class="file-window">
-		<div v-if="path" class="path">/:{{path.join("/")}}</div>
+		<div v-if="path" class="path">/{{path.join("/")}}</div>
         <div v-else class="path">drive:/</div>
         <div class="spacer"></div>
 
@@ -43,7 +43,7 @@ export default {
 }
 .path {
 	background-color: rgb(230, 230, 230);
-	color: black;
+	color: #000000;
 	padding: 8px;
     position: fixed;
     width:900px;
@@ -68,7 +68,6 @@ export default {
     font-size: 12px;
     font-weight: bold;
     width:80px;
-    /* border:1px solid black; */
     word-wrap: break-word;
     text-align: center;
     line-height: 13px;
@@ -76,5 +75,7 @@ export default {
 
 .folder img {
 	width: 35px;
+    height:35px;
+    object-fit: contain;
 }
 </style>

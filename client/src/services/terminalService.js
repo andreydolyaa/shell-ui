@@ -5,8 +5,9 @@ export const cmd_s = {
     getInstructions,
     filesStructure,
     createNewFolder,
-    // findPrevFolder
-    openUrl
+    findPrevFolder,
+    openUrl,
+    createTextFile
 }
 
 function newMsg(msg) {
@@ -17,20 +18,44 @@ function newMsg(msg) {
     }
 }
 
-function findPrevFolder(data, id) {
+
+function findPrevFolder(data, paths) {
     for (var i = 0; i < data.length; i++) {
-        if (data[i].id === id) {
+        if (data[i].path === paths) {
             return data[i];
         }
-        var found = findPrevFolder(data[i].subfolders, id);
+        var found = findPrevFolder(data[i].subfolders, paths);
         if (found) return found;
     }
 }
 
-function openUrl(url){
+
+function openUrl(url) {
     window.open(`https://${url}`, '_blank');
 }
 
+
+function createNewFolder(name) {
+    return {
+        id: createId(),
+        path: name.toLowerCase(),
+        folder: name,
+        icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+        subfolders: [],
+    }
+}
+
+function createTextFile(name) {
+    return {
+        id: createId(),
+        path: name.toLowerCase(),
+        folder: name,
+        icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+        subfolders: [],
+        type: 'txt',
+        content: ''
+    }
+}
 
 function filesStructure() {
     return [
@@ -45,7 +70,26 @@ function filesStructure() {
                     path: 'files',
                     folder: 'Files',
                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
-                    subfolders: [],
+                    subfolders: [
+                        {
+                            id: 'dfnhe5h4h',
+                            path: 'empty',
+                            folder: 'empty.txt',
+                            icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+                            subfolders: [],
+                            type: 'txt',
+                            content: ''
+                        },
+                        {
+                            id: 'dfg45g4hb34',
+                            path: 'empty(1)',
+                            folder: 'empty(1).txt',
+                            icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+                            subfolders: [],
+                            type: 'txt',
+                            content: ''
+                        }
+                    ],
                 }
             ],
         },
@@ -108,6 +152,32 @@ function filesStructure() {
                     ]
                 },
                 {
+                    id: "erh34h3h",
+                    path: 'secrets',
+                    folder: 'Secrets',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: [
+                        {
+                            id: 'vberwh3hb34',
+                            path: 'passwords',
+                            folder: 'passwords.txt',
+                            icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+                            subfolders: [],
+                            type: 'txt',
+                            content: ''
+                        },
+                        {
+                            id: 'ber53h35h',
+                            path: 'links',
+                            folder: 'links.txt',
+                            icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+                            subfolders: [],
+                            type: 'txt',
+                            content: ''
+                        }
+                    ]
+                },
+                {
                     id: "fe2g23dh45h4",
                     path: 'paperwork',
                     folder: 'Paperwork',
@@ -119,7 +189,7 @@ function filesStructure() {
                             folder: 'Bank',
                             icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                             subfolders: [
-        
+
                             ]
                         },
                         {
@@ -134,7 +204,7 @@ function filesStructure() {
                                     folder: '2019',
                                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                                     subfolders: [
-                
+
                                     ]
                                 },
                                 {
@@ -143,7 +213,7 @@ function filesStructure() {
                                     folder: '2020',
                                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                                     subfolders: [
-                
+
                                     ]
                                 },
                                 {
@@ -152,7 +222,7 @@ function filesStructure() {
                                     folder: '2021',
                                     icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
                                     subfolders: [
-                
+
                                     ]
                                 },
                             ]
@@ -170,19 +240,8 @@ function filesStructure() {
                 },
             ],
         },
-        
+
     ]
-}
-
-
-function createNewFolder(name) {
-    return {
-        id: createId(),
-        path: name.toLowerCase(),
-        folder: name,
-        icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
-        subfolders: [],
-    }
 }
 
 
@@ -213,8 +272,20 @@ function getInstructions() {
             msg: 'return one level up from a directory'
         },
         {
+            date: 'cd path/path/path etc (ex: cd media/music/psytrance)',
+            msg: 'specify exact path to a directory'
+        },
+        {
             date: 'browser (ex: browser www.google.com)',
             msg: 'opens a new tab with the provided url'
+        },
+        {
+            date: 'touch (ex: touch newTextFile)',
+            msg: 'creates new text file'
+        },
+        {
+            date:'exit -',
+            msg:'goes to main page'
         }
     ]
 }
