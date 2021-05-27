@@ -118,15 +118,20 @@ export default new Vuex.Store({
             }
             else if (cmd === 'exit') {
                 state.messages.push(cmd_s.newMsg('shutting down in 3 seconds...'));
-                state.files = [];
-                state.cmds = [];
-                state.user = 'root:';
-                state.error = null;
-                state.path = '';
-                state.pathLine = [];
-                state.prevFiles = [];
-                state.prevPath = [];
-                state.currentFolder = {};
+                var interval = setInterval(() => {
+                    state.files = [];
+                    this.dispatch('loadFiles');
+                    state.cmds = [];
+                    state.user = 'root:';
+                    state.error = null;
+                    state.path = '';
+                    state.pathLine = [];
+                    state.prevFiles = [];
+                    state.prevPath = [];
+                    state.currentFolder = {};
+                    state.messages = [cmd_s.newMsg('welcome to terminal.js'), cmd_s.newMsg('type --help for instructions')];
+                    clearInterval(interval);
+                }, 4000)
             }
             else {
                 state.messages.push(cmd_s.newMsg('unknown command, type --help for instructions'));
