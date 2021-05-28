@@ -7,7 +7,8 @@ export const cmd_s = {
     createNewFolder,
     findPrevFolder,
     openUrl,
-    createTextFile
+    createTextFile,
+    asciiArt
 }
 
 function newMsg(msg) {
@@ -73,12 +74,12 @@ function filesStructure() {
                     subfolders: [
                         {
                             id: 'dfnhe5h4h',
-                            path: 'file',
-                            folder: 'file.txt',
+                            path: 'about',
+                            folder: 'about.txt',
                             icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
                             subfolders: [],
                             type: 'txt',
-                            content: 'you can edit this file!'
+                            content: "###################################################################\n##\n##\n##\n## you can view the code of this project here - \n## https://github.com/andreydolyaa/terminal_learning_platform_vuejs\n## \n## \n## \n## \n## \n## \n##\n## \n## Andrey Dolya\n## 28.05.21\n## :)\n###################################################################\n"
                         },
                     ],
                 },
@@ -186,4 +187,9 @@ function createId(length = 10) {
             charactersLength)));
     }
     return result.join('');
+}
+
+
+function asciiArt() {
+    return "\n                         _                      _             _       _  _____ \n                        | |                    (_)           | |     | |/ ____|\n                        | |_ ___ _ __ _ __ ___  _ _ __   __ _| |     | | (___  \n                        | __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` | | _   | |\\___ \\ \n                        | ||  __/ |  | | | | | | | | | | (_| | || |__| |____) |\n                         \\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|_(_)____/|_____/ \n\n\n\n";
 }

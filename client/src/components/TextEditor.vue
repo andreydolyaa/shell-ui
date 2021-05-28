@@ -48,7 +48,7 @@ textarea {
 	outline: none;
 	background-color: black;
 	border: none;
-	white-space: pre-line;
+	white-space: pre-wrap;
 	word-wrap: break-word;
 }
 </style>

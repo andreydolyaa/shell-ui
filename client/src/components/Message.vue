@@ -28,7 +28,7 @@ export default {
 }
 .message {
 	margin-left: 10px;
-    white-space: pre-line;
+    white-space: pre-wrap;
 	word-wrap: break-word;
     max-width:770px;
 }

@@ -97,6 +97,7 @@ export default new Vuex.Store({
                     state.files = state.structure;
                     state.currentFolder = {};
                     state.user = 'root:'
+                    state.pathLine = [];
                 }
             }
             else if (path_chain[0] === 'cd' && path_chain.length >= 3) {
@@ -143,7 +144,7 @@ export default new Vuex.Store({
                     state.prevFiles = [];
                     state.prevPath = [];
                     state.currentFolder = {};
-                    state.messages = [cmd_s.newMsg('welcome to terminal.js'), cmd_s.newMsg('type --help for instructions')];
+                    state.messages = [cmd_s.newMsg('welcome to terminal.js, this project is still under development :)'), cmd_s.newMsg('type --help for instructions')];
                     clearInterval(interval);
                 }, 4000)
             }
@@ -151,6 +152,16 @@ export default new Vuex.Store({
                 storageService.store(STORAGE_KEY_MSG, null);
                 storageService.store(STORAGE_KEY, null);
                 router.push('/');
+                state.files = [];
+                this.dispatch('loadFiles');
+                state.cmds = [];
+                state.user = 'root:';
+                state.error = null;
+                state.path = '';
+                state.pathLine = [];
+                state.prevFiles = [];
+                state.prevPath = [];
+                state.currentFolder = {};
             }
             else if (cmd_chain[0] === 'edit' && cmd_chain.length === 2 && cmd_chain[1].slice(-4) === '.txt') {
                 const fileExists = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
@@ -246,7 +257,7 @@ export default new Vuex.Store({
             if (storage) {
                 this.state.messages = storage;
             } else {
-                this.state.messages = [cmd_s.newMsg('welcome to terminal.js'), cmd_s.newMsg('type --help for instructions')];
+                this.state.messages = [{date:'',msg:cmd_s.asciiArt()},cmd_s.newMsg(`welcome to terminal.js, this project is still under development :)`), cmd_s.newMsg('type --help for instructions')];
                 storageService.store(STORAGE_KEY_MSG, this.state.messages);
             }
         }

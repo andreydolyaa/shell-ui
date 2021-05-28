@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
         <div class="title">
-            <h1>TERMINAL.JS<span>_</span></h1>
+            <h1>TERMIN4L.JS<span>_</span></h1>
         </div>
 		<div class="typer-container">
 			<vue-typer text="~$ learn basic terminal usage"></vue-typer>
@@ -54,20 +54,19 @@ export default {
     top:39%;
 }
 .start button{
-    width:150px;
-    height:35px;
+    width:180px;
+    height:40px;
     font-size:1.5rem;
-    background-color: #646464;
+    background-color:transparent;
     color:#04bd04;
     font-weight: bold;
-    border: none;
-    border-radius: 5px;
+    border: 4px solid rgb(23, 68, 116);
     cursor: pointer;
     transition: .3s;
 }
 .start button:hover{
-    background-color: #575757;
-    color:#04d104;
+    color:#04e204;
+    border: 4px solid rgb(31, 89, 151);
 }
 .vue-typer {
   font-family: monospace;
