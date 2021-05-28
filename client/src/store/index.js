@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { cmd_s } from './../services/terminalService';
 import { storageService } from './../services/storageService';
+import router from '../router/index';
 
 Vue.use(Vuex);
 const STORAGE_KEY = 'terminaljsfiles';
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     mutations: {
         checkCmd(state, { cmd }) {
             state.messages.push({ date: state.user + '~$', msg: cmd });
+            storageService.store(STORAGE_KEY_MSG, state.messages);
             var cmd_chain = cmd.split(" ");
             var path_chain = cmd.split(/[ ,/]/);
             if (cmd === '--help') {
@@ -145,6 +147,11 @@ export default new Vuex.Store({
                     clearInterval(interval);
                 }, 4000)
             }
+            else if (cmd_chain[0] === 'reset') {
+                storageService.store(STORAGE_KEY_MSG, null);
+                storageService.store(STORAGE_KEY, null);
+                router.push('/');
+            }
             else if (cmd_chain[0] === 'edit' && cmd_chain.length === 2 && cmd_chain[1].slice(-4) === '.txt') {
                 const fileExists = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
                 if (fileExists !== -1) {
@@ -158,6 +165,7 @@ export default new Vuex.Store({
             else if (cmd_chain[0] === 'cat' && cmd_chain.length === 2 && cmd_chain[1].slice(-4) === '.txt') {
                 const file = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
                 state.messages.push(cmd_s.newMsg(state.files[file].content));
+                storageService.store(STORAGE_KEY_MSG, state.messages);
             }
             else {
                 this.commit({ type: 'setMessage', message: 'unknown command, type --help for instructions' });
@@ -169,7 +177,7 @@ export default new Vuex.Store({
         },
         clearTerminal(state) {
             state.messages = [];
-            storageService.store(STORAGE_KEY_MSG, this.state.messages);
+            storageService.store(STORAGE_KEY_MSG, state.messages);
         },
         setFiles(state, files) {
             state.files = files;
@@ -178,13 +186,13 @@ export default new Vuex.Store({
         saveTextFile(state, { file }) {
             state.textEditing = false;
             this.commit('saveToLocalStorage');
+            this.commit({ type: 'setMessage', message: "file has been saved" })
 
         },
         saveToLocalStorage(state) {
             storageService.store(STORAGE_KEY, state.structure);
         },
         setMessagesOnLoad(state, { messages }) {
-            console.log(messages);
             state.messages = messages;
         }
     },

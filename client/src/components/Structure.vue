@@ -27,7 +27,7 @@ export default {
 .structure{
     height:780px;
     width:300px;
-    background-color: #222;
+    background-color: #2d3a46;
     overflow-y: scroll;
 }
 .structure h3{

@@ -8,6 +8,7 @@
     line-height: 20px;
     letter-spacing: 0.3px;
     scroll-behavior: smooth;
+    border-radius: 2px;
 }
 :root {
     --text-color: #04bd04;
@@ -15,14 +16,14 @@
 
 .main {
     height: 100vh;
-    background-color: #333;
+    background-color: #161D21;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .home {
     height: 100vh;
-    background-color: #333;
+    background-color: #161D21;
     display: flex;
 	justify-content: center;
     align-items: center;
@@ -36,17 +37,17 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #1c1c1c;
+    background: #303030;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #D5A66A;
 }
 
 /* Handle on hover */

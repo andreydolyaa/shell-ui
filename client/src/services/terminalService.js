@@ -73,26 +73,48 @@ function filesStructure() {
                     subfolders: [
                         {
                             id: 'dfnhe5h4h',
-                            path: 'empty',
-                            folder: 'empty.txt',
+                            path: 'file',
+                            folder: 'file.txt',
                             icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
                             subfolders: [],
                             type: 'txt',
-                            content: 'this is a text\'s file content !'
+                            content: 'you can edit this file!'
                         },
-                        {
-                            id: 'dfg45g4hb34',
-                            path: 'empty(1)',
-                            folder: 'empty(1).txt',
-                            icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
-                            subfolders: [],
-                            type: 'txt',
-                            content: ''
-                        }
                     ],
+                },
+                {
+                    id: 'b53eh2g3',
+                    path: 'media',
+                    folder: 'Media',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: []
+                },
+                {
+                    id: 'bfg34gh2g3',
+                    path: 'shared',
+                    folder: 'Shared',
+                    icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+                    subfolders: []
                 }
             ],
         },
+        {
+            id: 'g234g2g3',
+            path: 'documents',
+            folder: 'Documents',
+            icon: 'https://www.pngkey.com/png/full/392-3921813_flat-folder-icon-png-folder-icon.png',
+            subfolders: [
+                {
+                    id: 'dfnfgh324h',
+                    path: 'passwords',
+                    folder: 'passwords.txt',
+                    icon: 'https://findicons.com/files/icons/2813/flat_jewels/512/file.png',
+                    subfolders: [],
+                    type: 'txt',
+                    content: '######## passwords file ##########\n# user123@host.com /pw - G#@Gg2124FF\n# user33@host.com /pw - VBGD$Gdjkiof2VW$@@\n# userpp@gmail.com /pw - VWERwlo3@@eer3R'
+                }
+            ]
+        }
     ]
 }
 
@@ -136,16 +158,20 @@ function getInstructions() {
             msg: 'creates new text file'
         },
         {
-            date: 'exit -',
-            msg: 'goes to main page'
-        },
-        {
             date: 'edit (ex: edit empty.txt)',
             msg: 'opens a text editor for the selected text file'
         },
         {
             date: 'cat (ex: cat empty.txt)',
             msg: 'reads the selected text file (displayed in the terminal)'
+        },
+        {
+            date: 'exit -',
+            msg: 'goes to main page'
+        },
+        {
+            date: 'reset - ',
+            msg: 'resets everything (directories ,texts, files, history, etc)'
         }
     ]
 }

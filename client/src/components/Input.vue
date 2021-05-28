@@ -45,13 +45,14 @@ export default {
 		},
 	},
 	mounted() {
-		this.focusInput();
+		if (this.$refs.input) {
+			this.focusInput();
+		}
 	},
 };
 </script>
 
 <style>
-
 .user {
 	color: red;
 }

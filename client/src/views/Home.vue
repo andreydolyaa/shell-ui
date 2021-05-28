@@ -20,7 +20,8 @@ export default {
 	},
     methods:{
         redirect(){
-            this.$router.push('/main')
+            this.$router.push('/main');
+            this.$store.dispatch({type:'loadMessages'})
         }
     }
 };

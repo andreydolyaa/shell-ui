@@ -40,7 +40,7 @@ export default {
 	background-color: #000;
 	width: 900px;
 	height: 450px;
-	padding: 10px;
+	padding: 15px;
 	overflow-y: scroll;
 }
 </style>

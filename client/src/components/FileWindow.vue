@@ -1,8 +1,8 @@
 <template>
 	<div class="file-window">
 		<div v-if="path" class="path">/{{path.join("/")}}</div>
-        <div v-else class="path">drive:/</div>
-        <div class="spacer"></div>
+		<div v-else class="path">drive:/</div>
+		<div class="spacer"></div>
 
 		<div class="file-sys">
 			<div class="files" v-for="file in files" :key="file.id">
@@ -21,9 +21,9 @@ export default {
 		files() {
 			return this.$store.getters.getFiles;
 		},
-        path(){
-            return this.$store.getters.getPathLine;
-        }
+		path() {
+			return this.$store.getters.getPathLine;
+		},
 	},
 };
 </script>
@@ -33,49 +33,54 @@ export default {
 	background-color: #fff;
 	width: 900px;
 	height: 300px;
-    overflow-y: scroll;
-    position: relative;
+	overflow-y: scroll;
+	position: relative;
 }
 .file-sys {
 	display: flex;
 	padding: 1rem;
-        flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 .path {
 	background-color: rgb(230, 230, 230);
 	color: #000000;
 	padding: 8px;
-    position: fixed;
-    width:900px;
-    font-weight: bold;
+	position: fixed;
+	width: 900px;
+	font-weight: bold;
 }
-.spacer{
-    height:30px;
+.spacer {
+	height: 30px;
 }
 .files {
 	width: 100px;
 }
-.folder{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin:5px 0;
+.folder {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 5px 0;
 }
-.folder p{
-    margin-top:3px;
-    color:black;
-    font-size: 12px;
-    font-weight: bold;
-    width:80px;
-    word-wrap: break-word;
-    text-align: center;
-    line-height: 13px;
+.folder p {
+	margin-top: 3px;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	width: 90px;
+	height: 50px;
+	word-wrap: break-word;
+	text-align: center;
+	line-height: 13px;
+	text-overflow: ellipsis;
+	display: inline-block;
+	white-space: pre-line;
+	overflow: hidden;
 }
 
 .folder img {
 	width: 35px;
-    height:35px;
-    object-fit: contain;
+	height: 35px;
+	object-fit: contain;
 }
 </style>
