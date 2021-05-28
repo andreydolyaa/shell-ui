@@ -9,6 +9,7 @@
 export default {
 	created() {
 		this.$store.dispatch({ type: "loadFiles" });
+		this.$store.dispatch({ type: "loadMessages" });
 	},
 };
 </script>

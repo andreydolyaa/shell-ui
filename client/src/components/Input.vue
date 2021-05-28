@@ -1,6 +1,6 @@
 <template>
 	<div class="input">
-		<p class="user">{{user}}</p>
+		<p class="user">{{user}}~$</p>
 		<input ref="input" type="text" @blur="focusInput" v-model="cmd" @keyup.enter="submitCmd();onEnter()" />
 	</div>
 </template>
@@ -51,18 +51,7 @@ export default {
 </script>
 
 <style>
-.input {
-	display: flex;
-	align-items: center;
-}
-.input input {
-	margin-left: 10px;
-	border: none;
-	background-color: transparent;
-	outline: none;
-	caret-color: #04bd04;
-	width: 100%;
-}
+
 .user {
 	color: red;
 }

@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { cmd_s } from './../services/terminalService';
+import { storageService } from './../services/storageService';
 
 Vue.use(Vuex);
+const STORAGE_KEY = 'terminaljsfiles';
+const STORAGE_KEY_MSG = 'terminaljsmessages';
 
 export default new Vuex.Store({
     state: {
-        messages: [cmd_s.newMsg('welcome to terminal.js'), cmd_s.newMsg('type --help for instructions')],
+        messages: [],
         cmds: [],
         user: 'root:',
         error: null,
@@ -16,16 +19,19 @@ export default new Vuex.Store({
         prevFiles: [],
         prevPath: [],
         structure: [],
-        currentFolder: {}
+        currentFolder: {},
+        textEditing: false,
+        textFile: {}
     },
     mutations: {
         checkCmd(state, { cmd }) {
-            state.messages.push({ date: state.user, msg: cmd });
+            state.messages.push({ date: state.user + '~$', msg: cmd });
             var cmd_chain = cmd.split(" ");
             var path_chain = cmd.split(/[ ,/]/);
             if (cmd === '--help') {
                 var help = cmd_s.getInstructions();
                 help.map(h => state.messages.push(h));
+                storageService.store(STORAGE_KEY_MSG, state.messages);
             }
             else if (cmd === 'cls') {
                 this.commit('clearTerminal');
@@ -38,24 +44,28 @@ export default new Vuex.Store({
                     }
                     var newFolder = cmd_s.createNewFolder(cmd_chain[1] + `(${numOfSameFiles})`);
                     state.files.push(newFolder);
-                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                    this.commit({ type: 'setMessage', message: `new directory \"${cmd_chain[1]}\" created` });
+                    this.commit('saveToLocalStorage');
                 }
                 else {
                     var newFolder = cmd_s.createNewFolder(cmd_chain[1]);
                     state.files.push(newFolder);
-                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                    this.commit({ type: 'setMessage', message: `new directory \"${cmd_chain[1]}\" created` });
+                    this.commit('saveToLocalStorage');
                 }
             }
             else if (cmd_chain[0] === 'rmdir' && cmd_chain.length === 2) {
                 const idx = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
                 state.files.splice(idx, 1);
-                state.messages.push(cmd_s.newMsg(`directory \"${cmd_chain[1]}\" removed`));
+                this.commit({ type: 'setMessage', message: `directory \"${cmd_chain[1]}\" removed` });
+                this.commit('saveToLocalStorage');
             }
             else if (cmd_chain[0] === 'mv' && cmd_chain.length === 3) {
                 const idx = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
                 state.files[idx].folder = cmd_chain[2];
                 state.files[idx].path = cmd_chain[2].toLowerCase();
-                state.messages.push(cmd_s.newMsg(`directory \"${cmd_chain[1]}\" changed to \"${cmd_chain[2]}\"`));
+                this.commit({ type: 'setMessage', message: `directory \"${cmd_chain[1]}\" changed to \"${cmd_chain[2]}\"` });
+                this.commit('saveToLocalStorage');
             }
             else if (cmd === 'ls') {
                 state.files.forEach((file, idx) => state.messages.push({ date: idx + 1 + ')', msg: file.folder }));
@@ -97,7 +107,7 @@ export default new Vuex.Store({
                 state.user = 'root:' + '/' + state.pathLine.join("/");
             }
             else if (cmd_chain[0] === 'browser' && cmd_chain.length === 2) {
-                state.messages.push(cmd_s.newMsg(`${cmd_chain[1]} opened in a new tab`));
+                this.commit({ type: 'setMessage', message: `${cmd_chain[1]} opened in a new tab` });
                 cmd_s.openUrl(cmd_chain[1]);
             }
             else if (cmd_chain[0] === 'touch' && cmd_chain.length === 2) {
@@ -108,12 +118,14 @@ export default new Vuex.Store({
                     }
                     var textFile = cmd_s.createTextFile(cmd_chain[1] + `(${numOfSameFiles}).txt`);
                     state.files.push(textFile);
-                    state.messages.push(cmd_s.newMsg(`new directory \"${cmd_chain[1]}\" created`));
+                    this.commit({ type: 'setMessage', message: `new directory \"${cmd_chain[1]}\" created` });
+                    this.commit('saveToLocalStorage');
                 }
                 else {
                     var textFile = cmd_s.createTextFile(cmd_chain[1] + '.txt');
                     state.files.push(textFile);
-                    state.messages.push(cmd_s.newMsg(`new text file \"${cmd_chain[1]}\" created`));
+                    this.commit({ type: 'setMessage', message: `new text file \"${cmd_chain[1]}\" created` });
+                    this.commit('saveToLocalStorage');
                 }
             }
             else if (cmd === 'exit') {
@@ -133,17 +145,48 @@ export default new Vuex.Store({
                     clearInterval(interval);
                 }, 4000)
             }
-            else {
-                state.messages.push(cmd_s.newMsg('unknown command, type --help for instructions'));
+            else if (cmd_chain[0] === 'edit' && cmd_chain.length === 2 && cmd_chain[1].slice(-4) === '.txt') {
+                const fileExists = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
+                if (fileExists !== -1) {
+                    state.textEditing = true;
+                    state.textFile = state.files[fileExists];
+                }
+                else {
+                    this.commit({ type: 'setMessage', message: `file \"${cmd_chain[0]}.txt\" not found in current directory` });
+                }
             }
+            else if (cmd_chain[0] === 'cat' && cmd_chain.length === 2 && cmd_chain[1].slice(-4) === '.txt') {
+                const file = state.files.findIndex(file => file.folder.toLowerCase() === cmd_chain[1].toLowerCase());
+                state.messages.push(cmd_s.newMsg(state.files[file].content));
+            }
+            else {
+                this.commit({ type: 'setMessage', message: 'unknown command, type --help for instructions' });
+            }
+        },
+        setMessage(state, { message }) {
+            state.messages.push(cmd_s.newMsg(message));
+            storageService.store(STORAGE_KEY_MSG, state.messages)
         },
         clearTerminal(state) {
             state.messages = [];
+            storageService.store(STORAGE_KEY_MSG, this.state.messages);
         },
         setFiles(state, files) {
             state.files = files;
             state.structure = files;
         },
+        saveTextFile(state, { file }) {
+            state.textEditing = false;
+            this.commit('saveToLocalStorage');
+
+        },
+        saveToLocalStorage(state) {
+            storageService.store(STORAGE_KEY, state.structure);
+        },
+        setMessagesOnLoad(state, { messages }) {
+            console.log(messages);
+            state.messages = messages;
+        }
     },
     getters: {
         getMessages(state) {
@@ -169,16 +212,61 @@ export default new Vuex.Store({
         },
         getCurrentFolder(state) {
             return state.currentFolder;
+        },
+        getIsEditing(state) {
+            return state.textEditing;
+        },
+        getTextFile(state) {
+            return state.textFile;
         }
     },
     actions: {
         loadFiles({ commit }) {
-            const files = cmd_s.filesStructure();
-            commit('setFiles', files);
-            return files; // ?
+            var storage = storageService.load(STORAGE_KEY);
+            if (storage) {
+                const files = storage;
+                commit('setFiles', files);
+            }
+            else {
+                const files = cmd_s.filesStructure();
+                storageService.store(STORAGE_KEY, files);
+                commit('setFiles', files);
+            }
+        },
+        loadMessages({ commit }) {
+            var storage = storageService.load(STORAGE_KEY_MSG);
+            if (storage) {
+                this.state.messages = storage;
+            } else {
+                this.state.messages = [cmd_s.newMsg('welcome to terminal.js'), cmd_s.newMsg('type --help for instructions')];
+                storageService.store(STORAGE_KEY_MSG, this.state.messages);
+            }
         }
     },
     modules: {
     }
 })
 
+
+function updateData(structure, newData) {
+    const data = findDirectory(structure, newData.id);
+    console.log(data);
+}
+
+
+function findDirectory(data, id, update) {
+    var x;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+            return data[i];
+        }
+        var found = findDirectory(data[i].subfolders, id);
+        if (found) {
+            found = update;
+            data[i] = found;
+            x = data;
+        }
+        return data;
+    }
+    return x;
+}

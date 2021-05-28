@@ -1,6 +1,6 @@
 <template>
 	<div class="message-container">
-		<p :style="[msg.date === 'root:' || calcChars === '/' ? {'color':'red'} : null]">{{msg.date}}</p>
+		<p :style="[msg.date === 'root:~$' || calcChars === '/' ? {'color':'red'} : null]">{{msg.date}}</p>
 		<p class="message">{{msg.msg}}</p>
 	</div>
 </template>
@@ -28,6 +28,8 @@ export default {
 }
 .message {
 	margin-left: 10px;
+    white-space: pre-line;
+	word-wrap: break-word;
 }
 </style>
 

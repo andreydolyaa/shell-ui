@@ -4,7 +4,12 @@
 			<Structure />
 		</div>
 		<div class="tf">
-			<Terminal />
+			<div v-if="textEditing">
+				<TextEditor />
+			</div>
+			<div v-else>
+				<Terminal />
+			</div>
 			<FileWindow />
 		</div>
 	</div>
@@ -14,8 +19,19 @@
 import FileWindow from "../components/FileWindow.vue";
 import Structure from "../components/Structure.vue";
 import Terminal from "../components/Terminal.vue";
+import TextEditor from "../components/TextEditor.vue";
 
 export default {
-	components: { Terminal, FileWindow, Structure },
+	computed: {
+		textEditing() {
+			return this.$store.getters.getIsEditing;
+		},
+	},
+	components: {
+		Terminal,
+		FileWindow,
+		Structure,
+		TextEditor,
+	},
 };
 </script>

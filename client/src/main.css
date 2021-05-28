@@ -53,3 +53,16 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.input {
+	display: flex;
+	align-items: center;
+}
+.input input {
+	margin-left: 10px;
+	border: none;
+	background-color: transparent;
+	outline: none;
+	caret-color: #04bd04;
+	width: 100%;
+}
